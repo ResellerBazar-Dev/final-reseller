@@ -1,0 +1,11 @@
+.title {
+  font-weight: 900 !important;
+}
+@media (max-width: 576px) and (min-width: 320px) {
+  .card {
+    width: 345px !important;
+  }
+  .mainGrid {
+    padding: 0px !important;
+  }
+}

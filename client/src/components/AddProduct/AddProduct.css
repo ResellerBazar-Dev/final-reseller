@@ -1,0 +1,19 @@
+.preview-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.preview-images img {
+  width: 100% !important;
+  max-width: 30%;
+  height: 150px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.image-input {
+  display: none !important;
+}
+.add-images{
+  text-align: center;
+}

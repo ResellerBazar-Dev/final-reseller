@@ -1,0 +1,62 @@
+/*--------------------- drawer css------------ */
+.drawer div {
+  background-color: #15161d !important;
+  color: white;
+}
+.drawer_menu_list div:hover {
+  background: linear-gradient(90deg, #d10024, #000000) !important;
+  transition: 0.5s all;
+}
+/*--------------------- drawer css end------------ */
+
+.admin_navbar header {
+  background: linear-gradient(90deg, #d10024, #000000) !important;
+}
+
+/*-------------------------- dashboard card css------------------- */
+.dashboard_card1 {
+  background-color: #0ab258 !important;
+}
+.dashboard_card2 {
+  background-color: #a50ab2 !important;
+}
+.dashboard_card3 {
+  background-color: #ce5353 !important;
+}
+.dashboard_card4 {
+  background-color: #d10024 !important;
+}
+.dashboard-card {
+  height: 200px;
+  border-radius: 20px !important;
+}
+.dashboard_card_main {
+  height: 100px;
+  width: 25%;
+  background-color: #bc2a8d !important;
+  margin-bottom: 20px !important;
+}
+.dashboard_card_icon {
+  border-radius: 50%;
+}
+.dashboard_card_icon svg {
+  color: white;
+}
+/*-------------------------- dashboard card css end------------------- */
+
+/*-------------------------- dashboard chart css ------------------- */
+
+.revnue-chart-main .revenue-chart-title {
+  padding-bottom: 10px;
+}
+.revnue-chart-main .revenue-chart-title .title {
+  font-weight: 600;
+  font-size: 18px;
+}
+.revnue-chart-main .revenue-graph {
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0px 10px 30px rgba(83, 109, 139, 0.15);
+  border-radius: 10px;
+}
+/*-------------------------- dashboard chart css end------------------- */

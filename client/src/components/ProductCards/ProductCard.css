@@ -1,0 +1,4 @@
+.name_price {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,8 @@
+.footer {
+  background-color: #15161d;
+  padding: 20px;
+  color: white;
+}
+ul li {
+  cursor: pointer;
+}

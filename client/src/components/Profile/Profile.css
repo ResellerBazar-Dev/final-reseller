@@ -1,0 +1,11 @@
+.css-nzinn5-MuiContainer-root {
+  max-width: 50% !important;
+}
+.image_input {
+  display: none !important;
+}
+@media (max-width: 992px) and (min-width: 320px) {
+  .css-nzinn5-MuiContainer-root {
+    max-width: 100% !important;
+  }
+}

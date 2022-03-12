@@ -1,0 +1,26 @@
+.mobileMenuIcon {
+  display: none;
+}
+.profileMenuItems li {
+  font-weight: 900;
+  padding: 10px;
+}
+.profileMenuItems li:hover {
+  background: linear-gradient(90deg, #d10024, #000000);
+  transition: 0.5s all;
+  color: white;
+}
+.css-4t3x6l-MuiPaper-root-MuiDrawer-paper{
+  width: 50% !important;
+}
+
+@media (min-width: 320px) and (max-width: 900px) {
+  .mobileMenuIcon {
+    display: flex;
+  }
+}
+@media (min-width: 320px) and (max-width: 576px) {
+  .searchBarLg {
+    display: none;
+  }
+}

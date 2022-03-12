@@ -1,0 +1,35 @@
+.slider_main {
+  /* display: flex; */
+}
+.slider_main .MuiButtonBase-root {
+  opacity: 1;
+}
+.slider_main .css-1abc02a {
+  right: 25%;
+}
+
+.slider_main .css-hn784z {
+  left: 25%;
+}
+.slider {
+  text-align: center;
+  /* width: 50%; */
+}
+.slider_paper {
+  height: 350px;
+  box-shadow: none !important;
+}
+.slider_paper img {
+  border-radius: 10px;
+}
+.css-1f8sh1y {
+  height: 350px !important;
+}
+
+/* ------------- product info ------------------ */
+.product_main_info {
+  height: 294px;
+  padding: 20px 10px;
+  width: 50%;
+}
+/* ------------- product info end ------------------ */

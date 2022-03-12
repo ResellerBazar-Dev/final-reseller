@@ -1,0 +1,19 @@
+.title {
+  font-weight: 600 !important;
+}
+.card-content h5,
+h6 {
+  text-align: center;
+  font-weight: 600 !important;
+}
+.deal-card-details-mobile {
+  display: none !important;
+}
+@media (max-width: 992px) {
+  .deal-card-details {
+    display: none !important;
+  }
+  .deal-card-details-mobile {
+    display: flex !important;
+  }
+}
