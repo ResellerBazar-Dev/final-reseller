@@ -7,7 +7,7 @@ import { createProduct, addProductImage } from "../../actions/productAction";
 
 const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
 
-const Review = () => {
+const Review = ({ productInfo, selectedImages }) => {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -16,10 +16,9 @@ const Review = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
           <Box className="preview-images">
-            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" />
-            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" />
-            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" />
-            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" />
+            {selectedImages.map((img) => {
+              return <img src={img} />;
+            })}
           </Box>
 
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
@@ -27,17 +26,31 @@ const Review = () => {
           </Typography>
           <Grid container sx={{ ml: "auto" }}>
             <Grid item xs={12} sm={6}>
-              <Typography gutterBottom>Product Name</Typography>
-              <Typography gutterBottom>Product Brand</Typography>
-              <Typography gutterBottom>Product Category</Typography>
-              <Typography gutterBottom>Product Sub Category</Typography>
-              <Typography gutterBottom>Product Description</Typography>
+              <Typography gutterBottom>
+                Product Name: {productInfo.product_name}
+              </Typography>
+              <Typography gutterBottom>
+                Product Brand: {productInfo.brand_name}
+              </Typography>
+              <Typography gutterBottom>
+                Product Category: {productInfo.category}
+              </Typography>
+              <Typography gutterBottom>
+                Product Sub Category: {productInfo.sub_category}
+              </Typography>
+              <Typography gutterBottom>
+                Product Description: {productInfo.description}
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography gutterBottom>Product Price</Typography>
-              <Typography gutterBottom>city</Typography>
-              <Typography gutterBottom>state</Typography>
-              <Typography gutterBottom>postal code</Typography>
+              <Typography gutterBottom>
+                Product Price: {productInfo.price}
+              </Typography>
+              <Typography gutterBottom>city: {productInfo.city}</Typography>
+              <Typography gutterBottom>state: {productInfo.state}</Typography>
+              <Typography gutterBottom>
+                postal code: {productInfo.zip_code}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

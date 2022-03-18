@@ -35,8 +35,8 @@ const ProductCard = () => {
                 <Card sx={{ maxWidth: 345 }}>
                   <CardMedia
                     component="img"
-                    height="140"
-                    image="blob:http://localhost:3000/74614aa2-9d54-4379-b7e9-d1772fddb4d6"
+                    height="200"
+                    image={val.product_image[0]}
                     alt="img"
                   />
                   <CardContent>

@@ -3,17 +3,22 @@ import mongoose from "mongoose";
 import cors from "cors";
 import productRoutes from "./src/router/product.routes.js";
 import imageUploadRoutes from "./src/router/productImage.routes.js";
+import categoriesRoutes from "./src/router/category.routes.js";
+import subCategoriesRoutes from "./src/router/sub_category.routes.js";
 import path from "path";
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+app.use("/assets", express.static(path.join("assets")));
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
 app.use("/api/products_images", imageUploadRoutes);
 app.use("/api/allProducts", productRoutes);
+app.use("/api/categories", categoriesRoutes);
+app.use("/api/subCategories", subCategoriesRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

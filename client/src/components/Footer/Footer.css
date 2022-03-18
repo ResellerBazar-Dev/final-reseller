@@ -2,6 +2,8 @@
   background-color: #15161d;
   padding: 20px;
   color: white;
+  position: relative;
+  margin-top: 100%;
 }
 ul li {
   cursor: pointer;

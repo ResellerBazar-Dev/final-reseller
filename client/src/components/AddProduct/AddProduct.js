@@ -16,10 +16,8 @@ import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useHistory } from "react-router-dom";
 import "./AddProduct.css";
-import { v4 as uuidv4 } from "uuid";
-
-import { useDispatch, useSelector } from "react-redux";
-import { createProduct, addProductImage } from "../../actions/productAction";
+import { useDispatch } from "react-redux";
+import { createProduct } from "../../actions/productAction";
 
 const steps = ["Product Details", "Upload Image", "Review Product"];
 
@@ -29,20 +27,18 @@ const AddProduct = () => {
 
   const [selectedImages, setSelectedImages] = useState([]);
 
-  var productImageArrayList = selectedImages;
-
   console.log("selectedImage", selectedImages);
-
-  const imageResponse = useSelector((state) => state);
 
   const imageHandleChange = (event) => {
     if (event.target.files) {
-      const fileArray = Array.from(event.target.files).map((file) =>
+      //for preview images
+      const fileArrayPreview = Array.from(event.target.files).map((file) =>
         URL.createObjectURL(file)
       );
-      console.log(fileArray);
-      setSelectedImages((prevImages) => prevImages.concat(fileArray));
-      Array.from(event.target.files).map((file) => URL.revokeObjectURL(file));
+      setSelectedImages((prevImages) => prevImages.concat(fileArrayPreview));
+
+      // for upload images
+      const fileArray = event.target.files;
       setProductInfo({ ...productInfo, product_image: fileArray });
     }
   };
@@ -50,31 +46,6 @@ const AddProduct = () => {
     return images.map((img) => {
       return <img src={img} key={img} alt="img" />;
     });
-
-    // let reader = new FileReader();
-    // reader.readAsDataURL(event.target.files[0]);
-    // var mediaFileData = event.target.files[0];
-
-    // reader.onload = async (e) => {
-    //   console.log(imageResponse);
-
-    //   var tempImageData = {
-    //     id: uuidv4(),
-    //     name: mediaFileData.name.replace(
-    //       `.${mediaFileData.name.split(".").pop()}`,
-    //       ""
-    //     ),
-    //     date: new Date(),
-    //     size: mediaFileData.size,
-    //     source: mediaFileData,
-    //     url: e.target.result,
-    //   };
-
-    //   console.log("tempData", tempImageData.url);
-    //   setSelectedImages(tempImageData);
-
-    //   setProductInfo({ ...productInfo, product_image: tempImageData });
-    // };
   };
 
   const [productInfo, setProductInfo] = useState({
@@ -124,7 +95,24 @@ const AddProduct = () => {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === steps.length - 1) {
-      dispatch(createProduct(productInfo, selectedImages));
+      if (productInfo.product_name !== "") {
+        const formData = new FormData();
+        formData.append("product_name", productInfo.product_name);
+        formData.append("brand_name", productInfo.brand_name);
+        formData.append("description", productInfo.description);
+        formData.append("category", productInfo.category);
+        formData.append("sub_category", productInfo.sub_category);
+        formData.append("price", productInfo.price);
+        formData.append("city", productInfo.city);
+        formData.append("dist", productInfo.dist);
+        formData.append("zip_code", productInfo.zip_code);
+        formData.append("address", productInfo.address);
+        for (let item of productInfo.product_image) {
+          formData.append("product_images", item);
+        }
+        dispatch(createProduct(formData));
+      }
+    } else {
     }
   };
 

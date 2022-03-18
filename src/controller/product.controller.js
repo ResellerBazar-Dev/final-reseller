@@ -5,7 +5,7 @@ export const createProduct = async (req, res) => {
   try {
     let productImages = [];
     for (let item of req.files) {
-      const tempImageURL = `${process.env.API_BASE_URL}/assets/products/${item.filename}`;
+      const tempImageURL = `http://localhost:3000/assets/products/${item.filename}`;
       productImages.push(tempImageURL);
     }
     const productData = new productSchema({

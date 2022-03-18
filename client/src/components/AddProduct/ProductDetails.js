@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
+import { useSelector, useDispatch } from "react-redux";
+import { getAllCategories } from "../../actions/categoryAction";
+import { getAllSubCategories } from "../../actions/subCategoryAction";
+
 const ProductDetails = ({ productInfo, setProductInfo }) => {
+  const catData = useSelector((state) => state.categoryData);
+  const subCatdata = useSelector((state) => state.subCategoryData);
+  const dispatch = useDispatch();
+
+  console.log("cat", catData);
+  console.log("subCat", subCatdata);
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+    dispatch(getAllSubCategories());
+  }, []);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -68,12 +84,13 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
                 })
               }
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {catData.data.map((catVal, id) => {
+                return (
+                  <MenuItem value={catVal._id} key={id}>
+                    {catVal.category_name}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </Grid>
@@ -94,12 +111,13 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
                 })
               }
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {subCatdata.data.map((catVal, id) => {
+                return (
+                  <MenuItem value={catVal._id} key={id}>
+                    {catVal.sub_category_name}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </Grid>
