@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Product.css";
 import Carousel from "react-material-ui-carousel";
 import { Paper, Button, Box, Grid } from "@mui/material";
 import ProductInfo from "./productInfo";
 import ProductInfoMore from "./productInfoMore";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../../actions/productAction";
+import { useParams } from "react-router-dom";
 
 var items = [
   {
@@ -24,6 +27,22 @@ function Item(props) {
   );
 }
 const Product = () => {
+  const dispatch = useDispatch();
+
+  const allData = useSelector((state) => state.productData);
+
+  const { id } = useParams();
+
+  const filterData = allData.data.filter((v) => v._id === id);
+
+  console.log(id);
+  console.log(allData);
+  console.log(filterData);
+
+  useEffect((id) => {
+    dispatch(getProduct(id));
+  }, []);
+
   return (
     <>
       <Box className="slider_main">

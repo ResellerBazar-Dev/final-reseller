@@ -8,15 +8,20 @@ import Box from "@mui/material/Box";
 import { IconButton } from "@mui/material";
 import { Grid } from "@mui/material";
 import "./ProductCard.css";
+import { useHistory, useParams } from "react-router-dom";
 
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getAllProducts } from "../../actions/productAction";
+import { getAllProducts, getProduct } from "../../actions/productAction";
 
 const ProductCard = () => {
+  const history = useHistory();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const allData = useSelector((state) => state.productData);
+
+  console.log("id", id);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -38,6 +43,7 @@ const ProductCard = () => {
                     height="200"
                     image={val.product_image[0]}
                     alt="img"
+                    onClick={() => history.push(`/product/${val._id}`)}
                   />
                   <CardContent>
                     <Box className="name_price">

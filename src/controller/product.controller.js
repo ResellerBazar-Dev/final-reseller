@@ -1,11 +1,11 @@
 import productSchema from "../model/product.model.js";
-// import toBase64 from "../helper/commonFunc.js";
 
 export const createProduct = async (req, res) => {
   try {
     let productImages = [];
     for (let item of req.files) {
       const tempImageURL = `https://staging-reseller-bazzar.herokuapp.com/assets/products/${item.filename}`;
+      // const tempImageURL = `http://localhost:3000/assets/products/${item.filename}`;
       productImages.push(tempImageURL);
     }
     const productData = new productSchema({
@@ -16,7 +16,7 @@ export const createProduct = async (req, res) => {
       price: req.body.price,
       category: req.body.category,
       sub_category: req.body.sub_category,
-      dist: req.body.dist,
+      state: req.body.state,
       zipCode: req.body.zipCode,
       product_image: productImages,
     });
@@ -33,6 +33,15 @@ export const getAllProducts = async (req, res) => {
   try {
     const getProducts = await productSchema.find();
     res.status(200).json(getProducts);
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+};
+
+export const getProduct = async (req, res) => {
+  try {
+    const getProduct = await productSchema.findById(req.params.id);
+    res.status(200).json(getProduct);
   } catch (error) {
     console.log({ message: error.message });
   }

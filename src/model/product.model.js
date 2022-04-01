@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
-  dist: {
+  state: {
     type: String,
     // required: true,
   },

@@ -7,18 +7,34 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategories } from "../../actions/categoryAction";
 import { getAllSubCategories } from "../../actions/subCategoryAction";
+import { getAllBrand } from "../../actions/brandAction";
+import { getAllState } from "../../actions/stateAction";
+import { getAllCity } from "../../actions/cityAction";
 
 const ProductDetails = ({ productInfo, setProductInfo }) => {
   const catData = useSelector((state) => state.categoryData);
   const subCatdata = useSelector((state) => state.subCategoryData);
+  const brandData = useSelector((state) => state.brandData);
+  const stateData = useSelector((state) => state.stateData);
+  const cityData = useSelector((state) => state.cityData);
   const dispatch = useDispatch();
 
-  console.log("cat", catData);
-  console.log("subCat", subCatdata);
+  const findSubCat = subCatdata.data.filter(
+    (v) => v.category_id === productInfo.category
+  );
+  const findBrand = brandData.data.filter(
+    (v) => v.category_id === productInfo.category
+  );
+  const findCity = cityData.data.filter(
+    (v) => v.state_id === productInfo.state
+  );
 
   useEffect(() => {
     dispatch(getAllCategories());
     dispatch(getAllSubCategories());
+    dispatch(getAllBrand());
+    dispatch(getAllState());
+    dispatch(getAllCity());
   }, []);
 
   return (
@@ -41,32 +57,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             }
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl variant="standard" fullWidth required>
-            <InputLabel id="demo-simple-select-standard-label">
-              Brand Name
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              label="Age"
-              value={productInfo.brand_name}
-              onChange={(e) =>
-                setProductInfo({
-                  ...productInfo,
-                  brand_name: e.target.value,
-                })
-              }
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+
         <Grid item xs={12} sm={6}>
           <FormControl variant="standard" fullWidth required>
             <InputLabel id="demo-simple-select-standard-label">
@@ -94,6 +85,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             </Select>
           </FormControl>
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <FormControl variant="standard" fullWidth required>
             <InputLabel id="demo-simple-select-standard-label">
@@ -111,10 +103,38 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
                 })
               }
             >
-              {subCatdata.data.map((catVal, id) => {
+              {findSubCat.map((catVal, id) => {
                 return (
                   <MenuItem value={catVal._id} key={id}>
                     {catVal.sub_category_name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <FormControl variant="standard" fullWidth required>
+            <InputLabel id="demo-simple-select-standard-label">
+              Brand Name
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Age"
+              value={productInfo.brand_name}
+              onChange={(e) =>
+                setProductInfo({
+                  ...productInfo,
+                  brand_name: e.target.value,
+                })
+              }
+            >
+              {findBrand.map((brandVal, id) => {
+                return (
+                  <MenuItem value={brandVal._id} key={id}>
+                    {brandVal.brand_name}
                   </MenuItem>
                 );
               })}
@@ -163,21 +183,55 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             }
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            variant="standard"
-            value={productInfo.city}
-            onChange={(e) =>
-              setProductInfo({ ...productInfo, city: e.target.value })
-            }
-          />
+          <FormControl variant="standard" fullWidth required>
+            <InputLabel id="demo-simple-select-standard-label">
+              State
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Age"
+              value={productInfo.state}
+              onChange={(e) =>
+                setProductInfo({ ...productInfo, state: e.target.value })
+              }
+            >
+              {stateData.data.map((stateVal, id) => {
+                return (
+                  <MenuItem value={stateVal._id} key={id}>
+                    {stateVal.state_name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </Grid>
+
         <Grid item xs={12} sm={6}>
+          <FormControl variant="standard" fullWidth required>
+            <InputLabel id="demo-simple-select-standard-label">city</InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Age"
+              value={productInfo.cityData}
+              onChange={(e) =>
+                setProductInfo({ ...productInfo, city: e.target.value })
+              }
+            >
+              {findCity.map((cityVal, id) => {
+                return (
+                  <MenuItem value={cityVal._id} key={id}>
+                    {cityVal.city_name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Grid>
+        {/* <Grid item xs={12} sm={6}>
           <TextField
             id="state"
             name="state"
@@ -189,7 +243,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
               setProductInfo({ ...productInfo, dist: e.target.value })
             }
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} sm={6}>
           <TextField
             required

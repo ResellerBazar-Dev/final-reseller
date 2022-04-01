@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/help" component={HelpUs} />
         <Route exact path="/sell-product" component={AddProduct} />
         <Route exact path="/ad-pricing" component={AdPricing} />
-        <Route exact path="/product" component={ProductDetails} />
+        <Route exact path="/product/:id" component={ProductDetails} />
 
         {/* admin routes */}
         <Route exact path="/admin-dashboard" component={AdminDashboard} />

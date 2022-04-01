@@ -26,6 +26,17 @@ export const getAllProducts = () => async (dispatch) => {
   }
 };
 
+export const getProduct = (id) => async (dispatch) => {
+  try {
+    dispatch(setProductsData);
+    const { data } = await axios.get(`/api/allProducts/:id`, id);
+    dispatch({ type: GET_ALL_DATA, payload: id });
+    console.log(data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 // export const addProductImage = (product_img) => async (dispatch) => {
 //   try {
 //     const data = new FormData();

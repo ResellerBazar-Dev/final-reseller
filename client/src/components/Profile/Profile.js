@@ -11,10 +11,14 @@ import "./Profile.css";
 import EditProfileDialog from "../EditProfileDialog/EditProfileDialog";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { useHistory } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const theme = createTheme();
 
 const Profile = () => {
+  const history = useHistory();
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -26,6 +30,11 @@ const Profile = () => {
   };
   return (
     <ThemeProvider theme={theme}>
+      <Box>
+        <IconButton onClick={() => history.push("/")}>
+          <ArrowBackIcon fontSize="large" />
+        </IconButton>
+      </Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

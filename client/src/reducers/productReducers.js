@@ -2,6 +2,7 @@ import {
   ADD_PRODUCT_IMAGE,
   CREATE_PRODUCT,
   GET_ALL_DATA,
+  GET_PRODUCT_DATA,
 } from "../actionTypes/action_types";
 
 const initialState = {
@@ -14,6 +15,13 @@ export default (state = initialState, action) => {
       return { ...state, data: action.payload, loading: false };
 
     case GET_ALL_DATA:
+      return {
+        ...state,
+        data: action.payload,
+        loading: false,
+      };
+
+    case GET_PRODUCT_DATA:
       return {
         ...state,
         data: action.payload,

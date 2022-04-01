@@ -57,7 +57,7 @@ const AddProduct = () => {
     category: "",
     sub_category: "",
     city: "",
-    dist: "",
+    state: "",
     zipCode: "",
     product_image: [],
   });
@@ -113,6 +113,7 @@ const AddProduct = () => {
         dispatch(createProduct(formData));
       }
     } else {
+      setProductInfo("");
     }
   };
 
