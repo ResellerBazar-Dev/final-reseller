@@ -40,10 +40,10 @@ const Footer = () => {
         <Grid item xs={6} sm={6} md={4}>
           <Box>
             <img src={logo} alt="logo" />
-            <Typography variant="h6">
+            {/* <Typography variant="h6">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
               eiusmod tempor incididunt ut.
-            </Typography>
+            </Typography> */}
           </Box>
         </Grid>
         <Grid item xs={1} sm={3} md={2}>
@@ -53,13 +53,13 @@ const Footer = () => {
               <ListItem onClick={() => history.push("/sell-product")}>
                 <ListItemText primary="Sell Product" />
               </ListItem>
-              <ListItem onClick={() => history.push("/ad-pricing")}>
+              {/* <ListItem onClick={() => history.push("/ad-pricing")}>
                 <ListItemText primary="Ad For Your Products" />
-              </ListItem>
+              </ListItem> */}
             </List>
           </Box>
         </Grid>
-        <Grid item xs={1} sm={3} md={4}>
+        {/* <Grid item xs={1} sm={3} md={4}>
           <Box>
             <Typography variant="h5">Information</Typography>
             <List>
@@ -74,7 +74,7 @@ const Footer = () => {
               </ListItem>
             </List>
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
       <PrivacyPolicy
         open={open}

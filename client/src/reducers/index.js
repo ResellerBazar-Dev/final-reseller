@@ -5,6 +5,8 @@ import subCategoryreducers from "./subCategoryreducers";
 import brandReducers from "./brandReducers";
 import stateReducers from "./stateReducers";
 import cityReducers from "./cityReducers";
+import wishlistReducers from "./wishlistReducers";
+import authReducers from "./authReducers";
 
 export default combineReducers({
   productData: productReducers,
@@ -13,4 +15,6 @@ export default combineReducers({
   brandData: brandReducers,
   stateData: stateReducers,
   cityData: cityReducers,
+  wishlistData: wishlistReducers,
+  auth: authReducers,
 });

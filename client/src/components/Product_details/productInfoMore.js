@@ -1,7 +1,14 @@
-import React from "react";
-import { Paper, Typography, Grid, Avatar } from "@mui/material";
+import React, { useEffect } from "react";
+import { Paper, Typography, Grid, Avatar, Box } from "@mui/material";
 
-const productInfoMore = () => {
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../../actions/authAction";
+
+const ProductInfoMore = ({ filterData }) => {
+  console.log(filterData[0]);
+
+  const dispatch = useDispatch();
+
   return (
     <>
       <Grid
@@ -10,45 +17,59 @@ const productInfoMore = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 2, sm: 12, md: 12 }}
       >
-        <Grid item xs={1} sm={4} md={10}>
+        <Grid item xs={12} sm={4} md={10}>
           <Paper sx={{ padding: "15px" }}>
-            <Typography variant="h5" style={{ fontWeight: 700 }}>
-              Product Name
+            <Box className="name_price_details">
+              <Typography variant="h5" style={{ fontWeight: 700 }}>
+                {filterData[0]?.product_name}
+              </Typography>
+              <Typography variant="h5" style={{ fontWeight: 700 }}>
+                ₹{filterData[0]?.price}
+              </Typography>
+            </Box>
+            <Typography>
+              <span style={{ fontWeight: 700 }}>Product Brand: </span>
+              {filterData[0]?.brand_name}
             </Typography>
-            <Typography variant="h5" style={{ fontWeight: 700 }}>
-              Price
+            <Typography>
+              <span style={{ fontWeight: 700 }}>Product Category: </span>
+              {filterData[0]?.category}
             </Typography>
-            <Typography variant="h5" style={{ fontWeight: 700 }}>
-              Brand Name
+            <Typography>
+              <span style={{ fontWeight: 700 }}>Product Sub-Category: </span>
+              {filterData[0]?.sub_category}
             </Typography>
             <Typography>
               <span style={{ fontWeight: 700 }}>Product Description: </span>
-              In publishing and graphic design, Lorem ipsum is a placeholder
-              text commonly used to demonstrate the visual form of a document or
-              a typeface without relying on meaningful content. Lorem ipsum may
-              be used as a placeholder before the final copy is
+              {filterData[0]?.description}
             </Typography>
             <Typography>
               <span style={{ fontWeight: 700 }}>Address: </span>
-              In publishing and graphic design, Lorem ipsum is a placeholder
-              text commonly used to demonstrate the visual form of a document or
-              a typeface without relying on meaningful content. Lorem ipsum may
-              be used as a placeholder before the final copy is
+              {filterData[0]?.address}
             </Typography>
-            <Typography style={{ fontWeight: 700 }}>Zip Code: </Typography>
-            <Typography style={{ fontWeight: 700 }}>Dis: </Typography>
-            <Typography style={{ fontWeight: 700 }}>city: </Typography>
+            <Typography style={{ fontWeight: 700 }}>
+              Zip Code: {filterData[0]?.zipCode}
+            </Typography>
+            <Typography style={{ fontWeight: 700 }}>
+              State: {filterData[0]?.state}{" "}
+            </Typography>
+            <Typography style={{ fontWeight: 700 }}>
+              city: {filterData[0]?.city}{" "}
+            </Typography>
           </Paper>
         </Grid>
-        <Grid item xs={1} sm={4} md={2}>
+        <Grid item xs={12} sm={4} md={2}>
           <Paper sx={{ padding: "15px" }}>
             <Avatar />
-            <Typography>Rajkumar Rupapara</Typography>
             <Typography>
-              <span>Phone: 9909719458</span>
+              Name:{filterData[0]?.user[0]?.first_name}{" "}
+              {filterData[0]?.user[0]?.last_name}
             </Typography>
             <Typography>
-              <span>Email: </span>
+              <span>Phone: {filterData[0]?.user[0]?.phone}</span>
+            </Typography>
+            <Typography>
+              <span>Email: {filterData[0]?.user[0]?.email}</span>
             </Typography>
           </Paper>
         </Grid>
@@ -57,4 +78,4 @@ const productInfoMore = () => {
   );
 };
 
-export default productInfoMore;
+export default ProductInfoMore;

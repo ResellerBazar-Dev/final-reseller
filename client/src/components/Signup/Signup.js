@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -15,6 +15,9 @@ import "./Signup.css";
 import { useHistory } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+import { register } from "../../actions/authAction";
+import { useDispatch } from "react-redux";
 
 function Copyright(props) {
   return (
@@ -38,15 +41,21 @@ const theme = createTheme();
 
 const Signup = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [signup, setSignup] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
+
+  console.log(signup);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    dispatch(register(signup));
+    history.push("/");
   };
   return (
     <ThemeProvider theme={theme}>
@@ -90,6 +99,10 @@ const Signup = () => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={signup?.first_name}
+                  onChange={(e) =>
+                    setSignup({ ...signup, ["first_name"]: e.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -100,6 +113,10 @@ const Signup = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={signup?.last_name}
+                  onChange={(e) =>
+                    setSignup({ ...signup, ["last_name"]: e.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -110,6 +127,10 @@ const Signup = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={signup?.email}
+                  onChange={(e) =>
+                    setSignup({ ...signup, ["email"]: e.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -121,16 +142,20 @@ const Signup = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={signup?.password}
+                  onChange={(e) =>
+                    setSignup({ ...signup, ["password"]: e.target.value })
+                  }
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="terms & conditions"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"

@@ -33,3 +33,14 @@
   width: 50%;
 }
 /* ------------- product info end ------------------ */
+
+
+@media (max-width: 576px) and (min-width: 320px) {
+  .css-1f8sh1y {
+    height: 186px !important;
+  }
+  .name_price_details{
+    display: flex;
+    justify-content: space-between;
+  }
+}

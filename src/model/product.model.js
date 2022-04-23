@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
+import userSchema from "./user.model.js";
 
 const productSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: userSchema,
+    required: true,
+  },
   product_name: {
     type: String,
     // required: true,

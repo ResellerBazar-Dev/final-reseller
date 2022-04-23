@@ -48,15 +48,16 @@ const Product = () => {
       <Box className="slider_main">
         <Box className="slider">
           <Carousel>
-            {items.map((item, i) => (
-              <Item key={i} item={item} />
+            {filterData[0]?.product_image?.map((item, i) => (
+              // <Item key={i} item={item[0]} />
+              <img src={item} />
             ))}
           </Carousel>
         </Box>
 
         {/* <ProductInfo /> */}
 
-        <ProductInfoMore />
+        <ProductInfoMore filterData={filterData} />
       </Box>
     </>
   );

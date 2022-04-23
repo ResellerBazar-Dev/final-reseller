@@ -49,8 +49,8 @@ const Review = ({ productInfo, selectedImages }) => {
               <Typography gutterBottom>city: {productInfo.city}</Typography>
               <Typography gutterBottom>state: {productInfo.state}</Typography>
               <Typography gutterBottom>
-                postal code: {productInfo.zip_code}
-              </Typography>
+                postal code: {productInfo.zipCode}
+              </Typography> 
             </Grid>
           </Grid>
         </Grid>

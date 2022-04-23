@@ -20,7 +20,6 @@ export const getAllProducts = () => async (dispatch) => {
     dispatch(setProductsData);
     const { data } = await axios.get(`/api/allProducts`);
     dispatch({ type: GET_ALL_DATA, payload: data });
-    console.log(data);
   } catch (error) {
     console.log(error.message);
   }

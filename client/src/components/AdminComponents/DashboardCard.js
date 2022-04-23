@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import Paper from "@mui/material/Paper";
 import { Grid } from "@mui/material";
@@ -13,7 +13,22 @@ import CategoryIcon from "@mui/icons-material/Category";
 import PersonIcon from "@mui/icons-material/Person";
 import HelpIcon from "@mui/icons-material/Help";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../../actions/productAction";
+import { getAllCategories } from "../../actions/categoryAction";
+import { getAllSubCategories } from "../../actions/subCategoryAction";
+
 const DashboardCard = () => {
+  const dispatch = useDispatch();
+  const productData = useSelector((state) => state.productData);
+  const categoryData = useSelector((state) => state.categoryData);
+  const subCategoryData = useSelector((state) => state.subCategoryData);
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+    dispatch(getAllCategories());
+    dispatch(getAllSubCategories());
+  }, []);
   return (
     <>
       <Paper
@@ -60,7 +75,7 @@ const DashboardCard = () => {
                 Products
               </Typography>
               <Typography variant="h6" sx={{ alignSelf: "center" }}>
-                500
+                {productData.data.length}
               </Typography>
             </Box>
           </Paper>
@@ -82,7 +97,7 @@ const DashboardCard = () => {
                 Category
               </Typography>
               <Typography variant="h6" sx={{ alignSelf: "center" }}>
-                500
+                {categoryData.data.length}
               </Typography>
             </Box>
           </Paper>
@@ -104,7 +119,7 @@ const DashboardCard = () => {
                 Sub-Category
               </Typography>
               <Typography variant="h6" sx={{ alignSelf: "center" }}>
-                500
+                {subCategoryData.data.length}
               </Typography>
             </Box>
           </Paper>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useeffect, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import {
   AppBar,
@@ -25,7 +25,11 @@ import "./Navbar.css";
 import logo from "../../img/Reseller Bazzar.svg";
 import { useHistory } from "react-router-dom";
 import LoginDialog from "../Login_Dialog/LoginDialog";
-import { HandymanRounded } from "@mui/icons-material";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getAllwishlist } from "../../actions/wishlistAction";
+
+import { logOut } from "../../actions/authAction";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,7 +58,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -65,7 +68,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  const loggedInUser = useSelector((state) => state.auth);
+  const wishlistData = useSelector((state) => state.wishlistData);
+
   // ------------ Profile menu ---------//
   const [profileMenu, setProfileMenu] = useState(null);
   const open = Boolean(profileMenu);
@@ -80,7 +88,11 @@ const NavBar = () => {
   const [openLoginDialog, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (loggedInUser?.token !== null) {
+      history.push("/deals");
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleCloseLoginDialog = () => {
@@ -97,6 +109,10 @@ const NavBar = () => {
   //   setDrawer(null);
   // };
   // ------------ Drawer ---------//
+
+  useEffect(() => {
+    dispatch(getAllwishlist());
+  }, []);
 
   return (
     <>
@@ -127,7 +143,7 @@ const NavBar = () => {
             >
               <img src={logo} alt="logo" />
             </Box>
-            <Search className="searchBarLg">
+            {/* <Search className="searchBarLg">
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -135,7 +151,7 @@ const NavBar = () => {
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
               />
-            </Search>
+            </Search> */}
 
             <IconButton
               size="large"
@@ -152,9 +168,13 @@ const NavBar = () => {
             <IconButton
               size="large"
               color="inherit"
-              onClick={() => history.push("/wishlist")}
+              onClick={() =>
+                loggedInUser?.token !== null
+                  ? history.push("/wishlist")
+                  : history.push("/signin")
+              }
             >
-              <Badge badgeContent={10} color="error">
+              <Badge badgeContent={wishlistData?.data?.length} color="error">
                 <FavoriteIcon style={{ fontSize: "2rem" }} />
               </Badge>
             </IconButton>
@@ -204,38 +224,72 @@ const NavBar = () => {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={() => history.push("/user-profile")}>
+              <MenuItem
+                onClick={() => history.push("/user-profile")}
+                style={{
+                  display: loggedInUser?.token === null ? "none" : "flex",
+                }}
+              >
                 <ListItemIcon>
                   <PersonRoundedIcon />
                 </ListItemIcon>
                 Profile
               </MenuItem>
-              <MenuItem onClick={() => history.push("/deals")}>
+              <MenuItem
+                onClick={() => history.push("/deals")}
+                style={{
+                  display: loggedInUser?.token === null ? "none" : "flex",
+                }}
+              >
                 <ListItemIcon>
                   <StorefrontRoundedIcon />
                 </ListItemIcon>
                 My Deals
               </MenuItem>
-              <MenuItem onClick={() => history.push("/admin-dashboard")}>
+              <MenuItem
+                onClick={() => history.push("/admin-dashboard")}
+                style={{
+                  display: loggedInUser?.token === null ? "none" : "flex",
+                }}
+              >
                 <ListItemIcon>
                   <AdminPanelSettingsIcon />
                 </ListItemIcon>
                 Admin
               </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => history.push("/signin")}>
+              <Divider
+                style={{
+                  display: loggedInUser?.token === null ? "none" : "flex",
+                }}
+              />
+              <MenuItem
+                onClick={() => history.push("/signin")}
+                style={{
+                  display: loggedInUser?.token === null ? "flex" : "none",
+                }}
+              >
                 <ListItemIcon>
                   <LockIcon />
                 </ListItemIcon>
                 Sign In
               </MenuItem>
-              <MenuItem onClick={() => history.push("/signup")}>
+              <MenuItem
+                onClick={() => history.push("/signup")}
+                style={{
+                  display: loggedInUser?.token === null ? "flex" : "none",
+                }}
+              >
                 <ListItemIcon>
                   <LockIcon />
                 </ListItemIcon>
                 Sign Up
               </MenuItem>
-              <MenuItem>
+              <MenuItem
+                onClick={() => dispatch(logOut())}
+                style={{
+                  display: loggedInUser?.token === null ? "none" : "flex",
+                }}
+              >
                 <ListItemIcon>
                   <Logout />
                 </ListItemIcon>

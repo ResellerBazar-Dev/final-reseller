@@ -10,9 +10,9 @@ import { getAllProducts } from "../../actions/productAction";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const allData = useSelector((state) => state.productData);
+  // const allData = useSelector((state) => state.productData);
 
-  console.log(allData.data);
+  // console.log(allData.data);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -24,7 +24,7 @@ const Home = () => {
       <Navbar />
       {/* Navbar section */}
       {/* products Sections */}
-      <Products allData={allData} />
+      <Products />
       {/* products Sections */}
       {/* Footer Section */}
       <Footer />

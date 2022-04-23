@@ -16,7 +16,7 @@ import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useHistory } from "react-router-dom";
 import "./AddProduct.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../actions/productAction";
 
 const steps = ["Product Details", "Upload Image", "Review Product"];
@@ -25,9 +25,11 @@ const theme = createTheme();
 const AddProduct = () => {
   const dispatch = useDispatch();
 
+  const loggedInUser = useSelector((state) => state.auth);
+
+
   const [selectedImages, setSelectedImages] = useState([]);
 
-  console.log("selectedImage", selectedImages);
 
   const imageHandleChange = (event) => {
     if (event.target.files) {
@@ -97,6 +99,7 @@ const AddProduct = () => {
     if (activeStep === steps.length - 1) {
       if (productInfo.product_name !== "") {
         const formData = new FormData();
+        formData.append("user_id", loggedInUser?.user?._id);
         formData.append("product_name", productInfo.product_name);
         formData.append("brand_name", productInfo.brand_name);
         formData.append("description", productInfo.description);
@@ -104,8 +107,8 @@ const AddProduct = () => {
         formData.append("sub_category", productInfo.sub_category);
         formData.append("price", productInfo.price);
         formData.append("city", productInfo.city);
-        formData.append("dist", productInfo.dist);
-        formData.append("zip_code", productInfo.zip_code);
+        formData.append("state", productInfo.state);
+        formData.append("zipCode", productInfo.zipCode);
         formData.append("address", productInfo.address);
         for (let item of productInfo.product_image) {
           formData.append("product_images", item);
@@ -113,7 +116,7 @@ const AddProduct = () => {
         dispatch(createProduct(formData));
       }
     } else {
-      setProductInfo("");
+      // setProductInfo("");
     }
   };
 

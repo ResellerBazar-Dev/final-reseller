@@ -14,12 +14,33 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfileImage } from "../../actions/profileAction";
+
 const theme = createTheme();
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [open, setOpen] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
+  const loggedInUser = useSelector((state) => state.auth);
+
+  console.log(profileImage);
+
+  const uploadImage = (event) => {
+    const image = event.target.files[0];
+
+    const formData = new FormData();
+
+    formData.append("profile_image", image);
+    console.log(image);
+
+    // setProfileImage(image);
+
+    dispatch(updateProfileImage(loggedInUser?.user?._id, formData));
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -66,6 +87,7 @@ const Profile = () => {
                 id="icon-button-file"
                 type="file"
                 className="image_input"
+                onChange={uploadImage}
               />
             </label>
           </Box>

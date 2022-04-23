@@ -8,4 +8,7 @@
   .mainGrid {
     padding: 0px !important;
   }
+  .name_price{
+    flex-direction: column !important;
+  }
 }

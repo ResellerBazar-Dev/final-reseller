@@ -1,4 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
+import { useEffect } from "react";
 import ForgotPassword from "./pages/ForgotPasswordPage/ForgotPassword";
 import ResetPassword from "./pages/ResetPasswordPage/ResetPassword";
 import HomePage from "./pages/HomePage/Home";
@@ -19,30 +20,52 @@ import AdminCategory from "./pages/Admin/AdminCategory";
 import AdminSubCategory from "./pages/Admin/AdminSubCategory";
 import AdminHelp from "./pages/Admin/AdminHelp";
 
+import { loadUser } from "./actions/authAction";
+import store from "./store";
+
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+    // console.log(store.dispatch(loadUser()));
+  }, [store.getState().auth]);
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/forgot-password" component={ForgotPassword} />
-        <Route exact path="/reset-password" component={ResetPassword} />
-        <Route exact path="/user-profile" component={Profile} />
-        <Route exact path="/wishlist" component={Wishlist} />
-        <Route exact path="/deals" component={Deal} />
-        <Route exact path="/help" component={HelpUs} />
-        <Route exact path="/sell-product" component={AddProduct} />
-        <Route exact path="/ad-pricing" component={AdPricing} />
-        <Route exact path="/product/:id" component={ProductDetails} />
+        {store.getState().auth?.token ? (
+          <>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/deals" component={Deal} />
+            <Route exact path="/wishlist" component={Wishlist} />
+            <Route exact path="/user-profile" component={Profile} />
+            <Route exact path="/sell-product" component={AddProduct} />
+            {/* <Route exact path="/ad-pricing" component={AdPricing} /> */}
+            <Route exact path="/product/:id" component={ProductDetails} />
+            <Route exact path="/help" component={HelpUs} />
+            {/* admin routes */}
+            <Route exact path="/admin-dashboard" component={AdminDashboard} />
+            <Route exact path="/admin-user" component={AdminUser} />
+            <Route exact path="/admin-category" component={AdminCategory} />
+            <Route
+              exact
+              path="/admin-subcategory"
+              component={AdminSubCategory}
+            />
+            <Route exact path="/admin-help" component={AdminHelp} />
 
-        {/* admin routes */}
-        <Route exact path="/admin-dashboard" component={AdminDashboard} />
-        <Route exact path="/admin-user" component={AdminUser} />
-        <Route exact path="/admin-category" component={AdminCategory} />
-        <Route exact path="/admin-subcategory" component={AdminSubCategory} />
-        <Route exact path="/admin-help" component={AdminHelp} />
-        <Redirect to="/" />
+            <Redirect to="/" />
+          </>
+        ) : (
+          <>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/forgot-password" component={ForgotPassword} />
+            <Route exact path="/reset-password" component={ResetPassword} />
+            <Route exact path="/help" component={HelpUs} />
+
+            {/* <Redirect to="/signin" /> */}
+          </>
+        )}
       </Switch>
     </div>
   );

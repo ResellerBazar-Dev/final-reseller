@@ -4,11 +4,12 @@ export const createProduct = async (req, res) => {
   try {
     let productImages = [];
     for (let item of req.files) {
-      const tempImageURL = `https://staging-reseller-bazzar.herokuapp.com/assets/products/${item.filename}`;
-      // const tempImageURL = `http://localhost:3000/assets/products/${item.filename}`;
+      // const tempImageURL = `https://staging-reseller-bazzar.herokuapp.com/assets/products/${item.filename}`;
+      const tempImageURL = `http://localhost:3000/assets/products/${item.filename}`;
       productImages.push(tempImageURL);
     }
     const productData = new productSchema({
+      user_id: req.body.user_id,
       product_name: req.body.product_name,
       brand_name: req.body.brand_name,
       address: req.body.address,
@@ -17,6 +18,7 @@ export const createProduct = async (req, res) => {
       category: req.body.category,
       sub_category: req.body.sub_category,
       state: req.body.state,
+      city: req.body.city,
       zipCode: req.body.zipCode,
       product_image: productImages,
     });
@@ -29,13 +31,19 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const getAllProducts = async (req, res) => {
-  try {
-    const getProducts = await productSchema.find();
-    res.status(200).json(getProducts);
-  } catch (error) {
-    console.log({ message: error.message });
-  }
+export const getAllProducts = (req, res) => {
+  productSchema
+    .aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+    ])
+    .then((data) => res.json(data));
 };
 
 export const getProduct = async (req, res) => {

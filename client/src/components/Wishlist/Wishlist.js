@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -8,10 +8,22 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { getAllwishlist, deleteWishlist } from "../../actions/wishlistAction";
 
 import "./Wishlist.css";
 
 const Wishlist = () => {
+  const history = useHistory();
+  const wishlistData = useSelector((state) => state.wishlistData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllwishlist());
+  }, []);
+
   return (
     <Box pb={10}>
       <Typography variant="h4" className="title">
@@ -24,31 +36,34 @@ const Wishlist = () => {
         sx={{ padding: "50px" }}
         className="mainGrid"
       >
-        {Array.from(Array(8)).map((_, index) => (
+        {wishlistData.data.map((val, index) => (
           <Grid item xs={1} sm={4} md={2} key={index}>
             <Card sx={{ maxWidth: "100%" }} className="card">
               <CardMedia
                 component="img"
                 height="140"
-                image="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                image={val.product[0]?.product_image[0]}
                 alt="green iguana"
+                onClick={() => history.push(`/product/${val.product[0]._id}`)}
               />
-              <CardContent>
+              <CardContent className="content-details">
                 <Box className="name_price">
                   <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                    {val.product[0]?.product_name}
                   </Typography>
                   <Typography gutterBottom variant="h6" component="div">
-                    $30000
+                    {val.product[0]?.price}
                   </Typography>
                 </Box>
                 <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
+                  {val.product[0]?.description}
                 </Typography>
               </CardContent>
               <CardActions>
-                <IconButton sx={{ mx: "auto", color: "#D10024" }}>
+                <IconButton
+                  sx={{ mx: "auto", color: "#D10024" }}
+                  onClick={() => dispatch(deleteWishlist(val._id))}
+                >
                   <DeleteRoundedIcon fontSize="large" />
                 </IconButton>
               </CardActions>

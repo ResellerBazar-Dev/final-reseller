@@ -20,13 +20,13 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
   const dispatch = useDispatch();
 
   const findSubCat = subCatdata.data.filter(
-    (v) => v.category_id === productInfo.category
+    (v) => v.categories[0].category_name === productInfo.category
   );
   const findBrand = brandData.data.filter(
-    (v) => v.category_id === productInfo.category
+    (v) => v.categories[0].category_name === productInfo.category
   );
   const findCity = cityData.data.filter(
-    (v) => v.state_id === productInfo.state
+    (v) => v.state[0].state_name === productInfo.state
   );
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             >
               {catData.data.map((catVal, id) => {
                 return (
-                  <MenuItem value={catVal._id} key={id}>
+                  <MenuItem value={catVal.category_name} key={id}>
                     {catVal.category_name}
                   </MenuItem>
                 );
@@ -105,7 +105,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             >
               {findSubCat.map((catVal, id) => {
                 return (
-                  <MenuItem value={catVal._id} key={id}>
+                  <MenuItem value={catVal.sub_category_name} key={id}>
                     {catVal.sub_category_name}
                   </MenuItem>
                 );
@@ -133,7 +133,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             >
               {findBrand.map((brandVal, id) => {
                 return (
-                  <MenuItem value={brandVal._id} key={id}>
+                  <MenuItem value={brandVal.brand_name} key={id}>
                     {brandVal.brand_name}
                   </MenuItem>
                 );
@@ -200,7 +200,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             >
               {stateData.data.map((stateVal, id) => {
                 return (
-                  <MenuItem value={stateVal._id} key={id}>
+                  <MenuItem value={stateVal.state_name} key={id}>
                     {stateVal.state_name}
                   </MenuItem>
                 );
@@ -223,7 +223,7 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             >
               {findCity.map((cityVal, id) => {
                 return (
-                  <MenuItem value={cityVal._id} key={id}>
+                  <MenuItem value={cityVal.city_name} key={id}>
                     {cityVal.city_name}
                   </MenuItem>
                 );
@@ -231,19 +231,6 @@ const ProductDetails = ({ productInfo, setProductInfo }) => {
             </Select>
           </FormControl>
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State"
-            fullWidth
-            variant="standard"
-            value={productInfo.dist}
-            onChange={(e) =>
-              setProductInfo({ ...productInfo, dist: e.target.value })
-            }
-          />
-        </Grid> */}
         <Grid item xs={12} sm={6}>
           <TextField
             required

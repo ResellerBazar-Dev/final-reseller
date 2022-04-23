@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,15 +7,30 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 
+import { useDispatch } from "react-redux";
+import { login } from "../../actions/authAction";
+import { useHistory } from "react-router-dom";
+
 const LoginDialog = ({ open, handleClose }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    password: "",
+  });
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    // event.preventDefault();
+    // const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+
+    dispatch(login(userLogin));
+    handleClose();
+    // history.push("/");
   };
   return (
     <div>
@@ -41,6 +56,10 @@ const LoginDialog = ({ open, handleClose }) => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={(e) =>
+                setUserLogin({ ...userLogin, ["email"]: e.target.value })
+              }
+              value={userLogin?.email}
             />
             <TextField
               margin="normal"
@@ -51,6 +70,10 @@ const LoginDialog = ({ open, handleClose }) => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) =>
+                setUserLogin({ ...userLogin, ["password"]: e.target.value })
+              }
+              value={userLogin?.password}
             />
 
             <Link href="/signup" variant="body2" className="signInLinks">
@@ -60,11 +83,12 @@ const LoginDialog = ({ open, handleClose }) => {
         </DialogContent>
         <DialogActions>
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             className="signInBtn"
+            onClick={() => handleSubmit()}
           >
             Sign In
           </Button>

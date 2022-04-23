@@ -3,7 +3,8 @@
   padding: 20px;
   color: white;
   position: relative;
-  margin-top: 100%;
+  margin-top: 15%;
+  bottom: 0;
 }
 ul li {
   cursor: pointer;

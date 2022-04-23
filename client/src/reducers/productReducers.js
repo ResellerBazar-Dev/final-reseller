@@ -12,7 +12,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_PRODUCT:
-      return { ...state, data: action.payload, loading: false };
+      return [...state, action.payload];
 
     case GET_ALL_DATA:
       return {
